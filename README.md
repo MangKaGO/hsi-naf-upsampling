@@ -94,11 +94,11 @@ No high-resolution "ground-truth" feature exists beyond DOFA's own 14×14 output
 upsampling task is simulated by first downsampling (`7to14` mode, used for all results):
 
 ```math
-\mathcal{L}(\theta) = \big\| \mathrm{NAF}_\theta\big({\downarrow} F,\; Y\big) - F \big\|_2^2, \qquad F = \mathrm{DOFA}(Y) \in \mathbb{R}^{1024\times 14\times 14},\quad {\downarrow}F \in \mathbb{R}^{1024\times 7\times 7}.
+\mathcal{L}(\theta) = \big\| \mathrm{NAF}_\theta\big({\downarrow} F,\; Y\big) - F \big\|_2^2
 ```
 
-DOFA's native output is the teacher, and NAF must recover it from a 7×7 bilinear
-sub-sampled copy, guided by the image. The target is a constant: only the NAF parameters
+where $F = \mathrm{DOFA}(Y)$ is DOFA's native 14×14 output (the teacher) and ${\downarrow}F$ its
+7×7 bilinear sub-sampled copy, from which NAF must recover $F$, guided by the image $Y$. The target is a constant: only the NAF parameters
 $\theta$ are updated. Because NAF is image-guided and resolution-agnostic, the learned
 operator is then applied at inference to DOFA's native 14×14 features to reach the full
 image resolution.
