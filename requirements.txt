@@ -1,0 +1,16 @@
+# Install PyTorch first, matching your CUDA version: https://pytorch.org/get-started/locally/
+torch>=2.0
+timm>=0.9
+einops
+numpy
+scipy
+pandas
+matplotlib
+tqdm
+rasterio        # only needed to train NAF on EnMAP tiles (GeoTIFF)
+huggingface_hub # only needed to download the DOFA weights
+
+# Optional but recommended (Linux + CUDA only): fast neighborhood attention for NAF.
+# Without it, a slower pure-PyTorch implementation is used automatically.
+# Pick the wheel matching your torch/CUDA version, see https://natten.org
+# natten
