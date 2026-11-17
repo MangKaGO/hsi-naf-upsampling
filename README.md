@@ -79,7 +79,7 @@ Given an HSI $Y \in \mathbb{R}^{B \times H \times W}$:
 4. **Cross-scale neighborhood attention.** Each high-resolution location $p$ attends only
    to a $k \times k$ neighborhood $\mathcal{N}(p)$ of its low-resolution counterpart:
 
-$$F_{up}(p) = \sum_{q \in \mathcal{N}(p)} \alpha_{pq}\, V_{LR}(q), \qquad \alpha_{pq} = \operatorname{softmax}_{q \in \mathcal{N}(p)}\!\left(\frac{Q_{HR}(p)^\top K_{LR}(q)}{\sqrt{d}}\right).$$
+$$F_{up}(p) = \sum_{q \in \mathcal{N}(p)} \alpha_{pq}\, V_{LR}(q), \qquad \alpha_{pq} = \mathrm{softmax}_{q \in \mathcal{N}(p)}\left(\frac{Q_{HR}(p)^\top K_{LR}(q)}{\sqrt{d}}\right).$$
 
 This is a learned, adaptive interpolation kernel. The values are the frozen DOFA features,
 so NAF never has to model DOFA's feature distribution: it only learns *where to look*.
