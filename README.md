@@ -42,7 +42,9 @@ spectrum over hundreds of narrow bands, but with a coarse spatial resolution: a 
 usually covers several materials. Under the *linear mixing model*, the image
 $Y \in \mathbb{R}^{B \times P}$ ($B$ bands, $P$ pixels) is
 
-$$Y = E\,A + N, \qquad E \in \mathbb{R}^{B \times c}_{+},\quad A \in \mathbb{R}^{c \times P}_{+},\quad \mathbf{1}^\top A = \mathbf{1}^\top,$$
+```math
+Y = E\,A + N, \qquad E \in \mathbb{R}^{B \times c}_{+},\quad A \in \mathbb{R}^{c \times P}_{+},\quad \mathbf{1}^\top A = \mathbf{1}^\top,
+```
 
 where the columns of $E$ are the $c$ *endmember* spectra (pure materials) and $A$ holds
 the per-pixel *abundances* (non-negative, summing to one). Unmixing recovers both $E$ and
@@ -79,7 +81,9 @@ Given an HSI $Y \in \mathbb{R}^{B \times H \times W}$:
 4. **Cross-scale neighborhood attention.** Each high-resolution location $p$ attends only
    to a $k \times k$ neighborhood $\mathcal{N}(p)$ of its low-resolution counterpart:
 
-$$F_{up}(p) = \sum_{q \in \mathcal{N}(p)} \alpha_{pq}\, V_{LR}(q), \qquad \alpha_{pq} = \mathrm{softmax}_{q \in \mathcal{N}(p)}\left(\frac{Q_{HR}(p)^\top K_{LR}(q)}{\sqrt{d}}\right).$$
+```math
+F_{up}(p) = \sum_{q \in \mathcal{N}(p)} \alpha_{pq}\, V_{LR}(q), \qquad \alpha_{pq} = \mathrm{softmax}_{q \in \mathcal{N}(p)}\left(\frac{Q_{HR}(p)^\top K_{LR}(q)}{\sqrt{d}}\right).
+```
 
 This is a learned, adaptive interpolation kernel. The values are the frozen DOFA features,
 so NAF never has to model DOFA's feature distribution: it only learns *where to look*.
@@ -89,7 +93,9 @@ so NAF never has to model DOFA's feature distribution: it only learns *where to 
 No high-resolution "ground-truth" feature exists beyond DOFA's own 14×14 output, so the
 upsampling task is simulated by first downsampling (`7to14` mode, used for all results):
 
-$$\mathcal{L}(\theta) = \big\| \mathrm{NAF}_\theta\big({\downarrow} F,\; Y\big) - F \big\|_2^2, \qquad F = \mathrm{DOFA}(Y) \in \mathbb{R}^{1024\times 14\times 14},\quad {\downarrow}F \in \mathbb{R}^{1024\times 7\times 7}.$$
+```math
+\mathcal{L}(\theta) = \big\| \mathrm{NAF}_\theta\big({\downarrow} F,\; Y\big) - F \big\|_2^2, \qquad F = \mathrm{DOFA}(Y) \in \mathbb{R}^{1024\times 14\times 14},\quad {\downarrow}F \in \mathbb{R}^{1024\times 7\times 7}.
+```
 
 DOFA's native output is the teacher, and NAF must recover it from a 7×7 bilinear
 sub-sampled copy, guided by the image. The target is a constant: only the NAF parameters
